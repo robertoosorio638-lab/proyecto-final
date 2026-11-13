@@ -11,8 +11,10 @@ export default function App() {
 
   async function cargar() {
     try {
-      setProductos(await obtenerProductos());
-      setResumen(await obtenerResumen());
+      const lista = await obtenerProductos();
+      const res = await obtenerResumen();
+      setProductos(lista);
+      setResumen(res);
       setError('');
     } catch {
       setError('No se pudo conectar con la API');
@@ -20,7 +22,23 @@ export default function App() {
   }
 
   useEffect(() => {
-    cargar();
+    let activo = true;
+    async function inicial() {
+      try {
+        const lista = await obtenerProductos();
+        const res = await obtenerResumen();
+        if (activo) {
+          setProductos(lista);
+          setResumen(res);
+        }
+      } catch {
+        if (activo) setError('No se pudo conectar con la API');
+      }
+    }
+    inicial();
+    return () => {
+      activo = false;
+    };
   }, []);
 
   async function agregar(producto) {
