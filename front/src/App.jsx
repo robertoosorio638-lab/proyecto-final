@@ -14,7 +14,7 @@ export default function App() {
       setProductos(await obtenerProductos());
       setResumen(await obtenerResumen());
       setError('');
-    } catch (e) {
+    } catch {
       setError('No se pudo conectar con la API');
     }
   }
