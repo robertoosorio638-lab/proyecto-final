@@ -41,7 +41,7 @@ npm test
 ## Despliegue
 
 Front compilado (`npm run build`) en un bucket de S3 y API en una instancia EC2.
-URL del front: [pegar al desplegar].
+URL del front: http://cuc-bp-roberto-sitio.s3-website-us-east-1.amazonaws.com
 Para redesplegar: poner la IP de la API en `front/.env.production`, correr `npm run build`, subir el contenido de `dist/` al bucket y arrancar la API en EC2 con `FRONT_URL` igual a la URL del bucket.
 
 ## Seguridad
@@ -51,3 +51,4 @@ Para redesplegar: poner la IP de la API en `front/.env.production`, correr `npm 
 - CORS restringido a la URL del front (variable `FRONT_URL`).
 - Security Group con una sola regla de entrada (puerto de la API) y SSH cerrado.
 - `npm audit`: api reporto 0 vulnerabilidades. El front reporto 4 moderadas, todas de `minimatch` dentro de ESLint (herramienta de desarrollo, no se incluye en el build de produccion). No se aplico `npm audit fix --force` porque instalaria una version mayor de ESLint con cambios que rompen compatibilidad.
+
